@@ -5,9 +5,9 @@
 //--------------------------------------------------------------
 
 using UnityEngine;
+using VehiclePhysics;
 
-
-namespace VehiclePhysics.Utility
+namespace _Assets.Vehicle_Physics_Pro.Sample_Assets.Scripts.Utility
 {
 
 [AddComponentMenu("Vehicle Physics/Utility/Follow Heading", 21)]

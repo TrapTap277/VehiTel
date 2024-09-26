@@ -7,12 +7,10 @@
 // A simple screenshot capture script
 
 
-using UnityEngine;
-using EdyCommonTools;
 using System.IO;
+using UnityEngine;
 
-
-namespace VehiclePhysics.Utility
+namespace _Assets.Vehicle_Physics_Pro.Sample_Assets.Scripts.Utility
 {
 
 public class CaptureScreenshot : MonoBehaviour

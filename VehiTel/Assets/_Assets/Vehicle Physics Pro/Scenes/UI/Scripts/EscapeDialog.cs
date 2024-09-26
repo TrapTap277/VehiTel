@@ -8,11 +8,11 @@
 
 
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
+using UnityEngine.UI;
+using VehiclePhysics;
 
-
-namespace VehiclePhysics.UI
+namespace _Assets.Vehicle_Physics_Pro.Scenes.UI.Scripts
 {
 
 public class EscapeDialog : MonoBehaviour

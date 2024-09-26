@@ -9,14 +9,14 @@
 // Assumes the VPStandardInput component is the only one active in the vehicle.
 
 
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
-using EdyCommonTools;
 using System;
+using EdyCommonTools;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
+using VehiclePhysics;
 
-
-namespace VehiclePhysics.UI
+namespace _Assets.Vehicle_Physics_Pro.Scenes.UI.Scripts
 {
 
 public class InputConfigDialog : MonoBehaviour

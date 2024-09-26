@@ -7,14 +7,12 @@
 // GenericMenu: a toggle-based menu
 
 
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
-using UnityEngine.EventSystems;
 using System;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
-
-namespace VehiclePhysics.UI
+namespace _Assets.Vehicle_Physics_Pro.Scenes.UI.Scripts
 {
 
 public class GenericMenu : MonoBehaviour

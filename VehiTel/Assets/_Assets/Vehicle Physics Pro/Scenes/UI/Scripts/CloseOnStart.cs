@@ -9,8 +9,7 @@
 
 using UnityEngine;
 
-
-namespace VehiclePhysics.UI
+namespace _Assets.Vehicle_Physics_Pro.Scenes.UI.Scripts
 {
 
 public class CloseOnStart : MonoBehaviour

@@ -8,11 +8,10 @@
 
 
 using UnityEngine;
-using UnityEngine.UI	;
 using UnityEngine.EventSystems;
+using UnityEngine.UI;
 
-
-namespace VehiclePhysics.UI
+namespace _Assets.Vehicle_Physics_Pro.Scenes.UI.Scripts
 {
 
 public class HoverHandler : MonoBehaviour,

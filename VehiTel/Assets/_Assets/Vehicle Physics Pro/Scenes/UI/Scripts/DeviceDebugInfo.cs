@@ -9,10 +9,9 @@
 
 using UnityEngine;
 using UnityEngine.UI;
-using EdyCommonTools;
+using VehiclePhysics;
 
-
-namespace VehiclePhysics.UI
+namespace _Assets.Vehicle_Physics_Pro.Scenes.UI.Scripts
 {
 
 public class DeviceDebugInfo : MonoBehaviour

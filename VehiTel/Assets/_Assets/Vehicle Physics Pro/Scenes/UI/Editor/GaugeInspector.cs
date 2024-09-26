@@ -5,6 +5,7 @@
 //--------------------------------------------------------------
 
 
+using _Assets.Vehicle_Physics_Pro.Scenes.UI.Scripts;
 using UnityEngine;
 using UnityEditor;
 using EdyCommonTools.EditorTools;
@@ -12,7 +13,7 @@ using EdyCommonTools.EditorTools;
 namespace VehiclePhysics.EditorTools
 {
 
-[CustomEditor(typeof(UI.Gauge)), CanEditMultipleObjects]
+[CustomEditor(typeof(Gauge)), CanEditMultipleObjects]
 public class GaugeInspector : VPInspector
 	{
 	static bool s_autoRegenerate = false;
@@ -31,7 +32,7 @@ public class GaugeInspector : VPInspector
 		s_autoRegenerate = GUILayout.Toggle(s_autoRegenerate, "Auto Generate");
 
 		if (s_autoRegenerate && CommonEditorTools.GUIChanged())
-			(target as UI.Gauge).Regenerate();
+			(target as Gauge).Regenerate();
 
 		// Handle Regenerate button.
 		// Must be done separately as GUIChanged doesn't respond to Undo within GUI.enabled = false.
@@ -40,7 +41,7 @@ public class GaugeInspector : VPInspector
 			GUI.enabled = false;
 
 		if (GUILayout.Button("Generate Gauge"))
-			(target as UI.Gauge).Regenerate();
+			(target as Gauge).Regenerate();
 
 		GUI.enabled = true;
 

@@ -8,11 +8,9 @@
 
 
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
-
-namespace VehiclePhysics.UI
+namespace _Assets.Vehicle_Physics_Pro.Scenes.UI.Scripts
 {
 
 public class CloseOnKeyOrClick : MonoBehaviour,

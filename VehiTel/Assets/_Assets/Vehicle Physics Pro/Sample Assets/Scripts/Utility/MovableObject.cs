@@ -6,8 +6,7 @@
 
 using UnityEngine;
 
-
-namespace VehiclePhysics.Utility
+namespace _Assets.Vehicle_Physics_Pro.Sample_Assets.Scripts.Utility
 {
 
 [AddComponentMenu("Vehicle Physics/Utility/Movable Object", 43)]

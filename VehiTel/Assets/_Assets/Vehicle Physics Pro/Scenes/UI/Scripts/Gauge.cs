@@ -7,13 +7,11 @@
 // Gauge: a procedurally generated dashboard gauge
 
 
+using EdyCommonTools;
 using UnityEngine;
 using UnityEngine.UI;
-using System.Collections.Generic;
-using EdyCommonTools;
 
-
-namespace VehiclePhysics.UI
+namespace _Assets.Vehicle_Physics_Pro.Scenes.UI.Scripts
 {
 
 public class Gauge : MonoBehaviour

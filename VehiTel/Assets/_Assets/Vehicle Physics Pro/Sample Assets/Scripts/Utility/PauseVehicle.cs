@@ -5,9 +5,9 @@
 //--------------------------------------------------------------
 
 using UnityEngine;
+using VehiclePhysics;
 
-
-namespace VehiclePhysics
+namespace _Assets.Vehicle_Physics_Pro.Sample_Assets.Scripts.Utility
 {
 
 public class PauseVehicle : VehicleBehaviour

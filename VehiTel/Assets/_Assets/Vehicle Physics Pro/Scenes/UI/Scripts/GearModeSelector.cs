@@ -6,152 +6,138 @@
 
 // GearModeSelector: Shows current gear mode and allows selecting it
 
-
-using UnityEngine;
-using UnityEngine.UI	;
-using UnityEngine.EventSystems;
 using EdyCommonTools;
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using VehiclePhysics;
 
-
-namespace VehiclePhysics.UI
+namespace _Assets.Vehicle_Physics_Pro.Scenes.UI.Scripts
 {
+    public class GearModeSelector : MonoBehaviour, IPointerDownHandler
+    {
+        public static Graphic CurrentGear;
+        
+        public VehicleBase vehicle;
 
-public class GearModeSelector : MonoBehaviour,
-		IPointerDownHandler
-	{
-	public VehicleBase vehicle;
+        public Color selectedColor = GColor.ParseColorHex("#E6E6E6");
+        public Color unselectedColor = GColor.ParseColorHex("#999999");
+        public Transform selector;
 
-	public Color selectedColor = GColor.ParseColorHex("#E6E6E6");
-	public Color unselectedColor = GColor.ParseColorHex("#999999");
-	public Transform selector;
+        [Header("Gear elements")] public Graphic gearM;
 
-	[Header("Gear elements")]
-	public Graphic gearM;
-	public Graphic gearP;
-	public Graphic gearR;
-	public Graphic gearN;
-	public Graphic gearD;
-	public Graphic gearL;
+        public Graphic gearP;
+        public Graphic gearR;
+        public Graphic gearN;
+        public Graphic gearD;
+        public Graphic gearL;
 
+        private int m_prevGearMode = -1;
+        private int m_prevGearInput = -1;
+        private int m_newGearMode = -1;
 
-	int m_prevGearMode = -1;
-	int m_prevGearInput = -1;
-	int m_newGearMode = -1;
+        private void OnEnable()
+        {
+            m_prevGearMode = -1;
+            m_prevGearInput = -1;
+            m_newGearMode = -1;
+        }
 
+        private void FixedUpdate()
+        {
+            if (vehicle == null) return;
 
-	void OnEnable ()
-		{
-		m_prevGearMode = -1;
-		m_prevGearInput = -1;
-		m_newGearMode = -1;
-		}
+            var gearInput = vehicle.data.Get(Channel.Input, InputData.AutomaticGear);
+            var gearMode = vehicle.data.Get(Channel.Vehicle, VehicleData.GearboxMode);
 
+            if (gearMode != m_prevGearMode)
+            {
+                HighlightGear(gearMode);
+                m_prevGearMode = gearMode;
+            }
 
-	void FixedUpdate ()
-		{
-		if (vehicle == null) return;
+            if (gearInput != m_prevGearInput)
+            {
+                MoveGearSelector(gearInput);
+                m_prevGearInput = gearInput;
+            }
 
-		int gearInput = vehicle.data.Get(Channel.Input, InputData.AutomaticGear);
-		int gearMode = vehicle.data.Get(Channel.Vehicle, VehicleData.GearboxMode);
+            if (m_newGearMode >= 0)
+            {
+                vehicle.data.Set(Channel.Input, InputData.AutomaticGear, m_newGearMode);
+                m_newGearMode = -1;
+            }
+        }
 
-		if (gearMode != m_prevGearMode)
-			{
-			HighlightGear(gearMode);
-			m_prevGearMode = gearMode;
-			}
+        public void OnPointerDown(PointerEventData eventData)
+        {
+            if (vehicle == null || eventData.button != PointerEventData.InputButton.Left) return;
 
-		if (gearInput != m_prevGearInput)
-			{
-			MoveGearSelector(gearInput);
-			m_prevGearInput = gearInput;
-			}
+            var pressed = eventData.pointerCurrentRaycast.gameObject;
+            var graphic = pressed.GetComponentInChildren<Graphic>();
 
-		if (m_newGearMode >= 0)
-			{
-			vehicle.data.Set(Channel.Input, InputData.AutomaticGear, m_newGearMode);
-			m_newGearMode = -1;
-			}
-		}
+            if (graphic != null) m_newGearMode = GraphicToGear(graphic);
+        }
 
+        private void HighlightGear(int gearMode)
+        {
+            ClearEngagedGearMode();
+            SetGraphicColor(GearToGraphic(gearMode), selectedColor);
+        }
 
-	public void OnPointerDown (PointerEventData eventData)
-		{
-		if (vehicle == null || eventData.button != PointerEventData.InputButton.Left) return;
+        private void MoveGearSelector(int gearInput)
+        {
+            if (selector != null)
+            {
+                var targetGraphic = GearToGraphic(gearInput);
 
-		GameObject pressed = eventData.pointerCurrentRaycast.gameObject;
-		Graphic graphic = pressed.GetComponentInChildren<Graphic>();
+                if (targetGraphic != null) selector.position = targetGraphic.transform.position;
+            }
+        }
 
-		if (graphic != null)
-			m_newGearMode = GraphicToGear(graphic);
-		}
+        private void ClearEngagedGearMode()
+        {
+            SetGraphicColor(gearM, unselectedColor);
+            SetGraphicColor(gearP, unselectedColor);
+            SetGraphicColor(gearR, unselectedColor);
+            SetGraphicColor(gearN, unselectedColor);
+            SetGraphicColor(gearD, unselectedColor);
+            SetGraphicColor(gearL, unselectedColor);
+        }
 
+        private Graphic GearToGraphic(int gearMode)
+        {
+            CurrentGear = gearMode switch
+            {
+                0 => gearM,
+                1 => gearP,
+                2 => gearR,
+                3 => gearN,
+                4 => gearD,
+                5 => gearL,
+                _ => CurrentGear
+            };
 
-	void HighlightGear (int gearMode)
-		{
-		ClearEngagedGearMode();
-		SetGraphicColor(GearToGraphic(gearMode), selectedColor);
-		}
+            return CurrentGear;
 
+            return null;
+        }
 
-	void MoveGearSelector (int gearInput)
-		{
-		if (selector != null)
-			{
-			Graphic targetGraphic = GearToGraphic(gearInput);
+        private int GraphicToGear(Graphic graphic)
+        {
+            if (graphic == gearM) return 0;
+            if (graphic == gearP) return 1;
+            if (graphic == gearR) return 2;
+            if (graphic == gearN) return 3;
+            if (graphic == gearD) return 4;
+            if (graphic == gearL) return 5;
 
-			if (targetGraphic != null)
-				{
-				selector.position = targetGraphic.transform.position;
-				}
-			}
-		}
+            return -1;
+        }
 
-
-	void ClearEngagedGearMode ()
-		{
-		SetGraphicColor(gearM, unselectedColor);
-		SetGraphicColor(gearP, unselectedColor);
-		SetGraphicColor(gearR, unselectedColor);
-		SetGraphicColor(gearN, unselectedColor);
-		SetGraphicColor(gearD, unselectedColor);
-		SetGraphicColor(gearL, unselectedColor);
-		}
-
-
-	Graphic GearToGraphic (int gearMode)
-		{
-		switch (gearMode)
-			{
-			case 0: return gearM;
-			case 1: return gearP;
-			case 2: return gearR;
-			case 3: return gearN;
-			case 4: return gearD;
-			case 5: return gearL;
-			}
-
-		return null;
-		}
-
-
-	int GraphicToGear (Graphic graphic)
-		{
-		if (graphic == gearM) return 0;
-		if (graphic == gearP) return 1;
-		if (graphic == gearR) return 2;
-		if (graphic == gearN) return 3;
-		if (graphic == gearD) return 4;
-		if (graphic == gearL) return 5;
-
-		return -1;
-		}
-
-
-	void SetGraphicColor (Graphic graphic, Color color)
-		{
-		if (graphic != null)
-			graphic.color = color;
-		}
-	}
-
+        private void SetGraphicColor(Graphic graphic, Color color)
+        {
+            if (graphic != null) graphic.color = color;
+        }
+    }
 }

@@ -8,14 +8,13 @@
 
 
 using System;
+using EdyCommonTools;
 using UnityEngine;
-using UnityEngine.UI;
 using UnityEngine.Events;
 using UnityEngine.EventSystems;
-using EdyCommonTools;
+using UnityEngine.UI;
 
-
-namespace VehiclePhysics.UI
+namespace _Assets.Vehicle_Physics_Pro.Scenes.UI.Scripts
 {
 
 public class MultiToggle : MonoBehaviour,
