@@ -7,13 +7,13 @@
 // Dashboard: handles a dashboard UI with signals and gauges
 
 
-using UnityEngine;
-using UnityEngine.UI;
 using System;
 using EdyCommonTools;
+using UnityEngine;
+using UnityEngine.UI;
+using VehiclePhysics;
 
-
-namespace VehiclePhysics.UI
+namespace _Assets.Vehicle_Physics_Pro.Scenes.UI.Scripts
 {
 
 public class Dashboard : MonoBehaviour
@@ -39,6 +39,8 @@ public class Dashboard : MonoBehaviour
 	public Text gearLabel;
 	public Text speedMphLabel;
 
+	public static float Rpm;
+	
 	[Serializable]
 	public class Needle
 		{
@@ -116,12 +118,12 @@ public class Dashboard : MonoBehaviour
 		float frameRatio = InterpolatedFloat.GetFrameRatio();
 
 		float speedMs = m_speedMs.GetInterpolated(frameRatio);
-		float engineRpm = m_engineRpm.GetInterpolated(frameRatio);
+		Rpm = m_engineRpm.GetInterpolated(frameRatio);
 		if (speedMs < 0) speedMs = 0.0f;
-		if (engineRpm < 0) engineRpm = 0.0f;
+		if (Rpm < 0) Rpm = 0.0f;
 
 		speedNeedle.SetValue(speedMs * 3.6f);
-		rpmNeedle.SetValue(engineRpm);
+		rpmNeedle.SetValue(Rpm);
 
 		// Warning signal also at update rate because of its timing
 
